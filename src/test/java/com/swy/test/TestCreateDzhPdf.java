@@ -25,10 +25,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 public class TestCreateDzhPdf {
 
 	@Test
-	public void testCreate() throws DocumentException, IOException {
-		
-		
-	
+	public void testCreateSimple() throws DocumentException, IOException {
 	
 		 // 中文支持，需要引入 itext-asian.jar  
 		BaseFont chinessFont = BaseFont.createFont("STSongStd-Light", "UniGB-UCS2-H", BaseFont.NOT_EMBEDDED);  
@@ -48,7 +45,7 @@ public class TestCreateDzhPdf {
 	   
 		
 		// 添加一个标题 
-        Paragraph p1 = new Paragraph("公司董事会成员、监事会成员、经理情况\n",font);
+        Paragraph p1 = new Paragraph("公司董事会成员、监事会成员、经理情况",font);
         //设置居中显示
         p1.setAlignment(Element.ALIGN_CENTER);
 		document.add(p1);
@@ -67,6 +64,8 @@ public class TestCreateDzhPdf {
 		
 		//使用以上两个函数，必须使用以下函数，将宽度锁定。
 		 //table.setLockedWidth(true);
+		
+		//表格默认
 
 		
 		
@@ -184,9 +183,14 @@ public class TestCreateDzhPdf {
 		
 		
 		//添加页脚
+		/**
+		 * 设置缩进  
+		 */
+        //paragraph.setIndentationLeft(50);  
+        // paragraph.setIndentationRight(50);
 		Paragraph footer1 = new Paragraph("注：①按董事会成员中、董事会成员、经理顺序填写。",chinesefont);
 		document.add(footer1);
-
+		
 		Paragraph footer2 = new Paragraph("        ②“职务”系指董事、董事长、执行董事、监事、经理等",chinesefont);
 		document.add(footer2);
 		 
@@ -227,14 +231,14 @@ public class TestCreateDzhPdf {
 		tableContent.add(map1);
 		tableContent.add(map1);
 		tableContent.add(map1);
-		PdfPTable table = createTable(tableTitle,tableContent,6,new float[]{2,1,1,4,3,2},99f);
+		PdfPTable table = createSimpleTable(tableTitle,tableContent,6,new float[]{2,1,1,4,3,2},99f);
 		document.add(table);
 		document.close();
 	}
 	
 	
 	
-	private PdfPTable createTable(String[] tableTitle,List<Map<String,String>> tableContent,int colnum,
+	private PdfPTable createSimpleTable(String[] tableTitle,List<Map<String,String>> tableContent,int colnum,
 			float[] colRatio,float widthPercentage) throws Exception
 	{
 		
